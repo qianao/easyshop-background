@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.UsersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.Users">
+        <id column="user_id" property="userId" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="user_img" property="userImg" />
+        <result column="user_mobile" property="user_mobile" />
+        <result column="user_email" property="user_email" />
+        <result column="user_sex" property="userSex" />
+        <result column="user_birth" property="userBirth" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modify" property="gmtModify" />
+        <result column="is_delete" property="isDelete" />
+    </resultMap>
+
+    <sql id="basecol">
+        user_id,username,password,user_mobile,gmt_create
+    </sql>
+
+    <select id="selectByNameAndPwd" resultType="com.example.mybatisplus.model.domain.Users">
+        select <include refid="basecol"/>from users where username=#{name}
+    </select>
+
+    <select id="isExist" resultType="com.example.mybatisplus.model.domain.Users">
+        select <include refid="basecol"/>from users where user_mobile=#{userId}
+    </select>
+
+    <insert id="insertUser" useGeneratedKeys="true">
+        insert into users(username,password,user_mobile,user_email) value (#{userName},#{userPwd},#{userId},#{user_email})
+    </insert>
+</mapper>

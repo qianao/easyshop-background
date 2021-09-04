@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.108.48.162:3306/easyshop?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    username: hive
+    password: admin
+  mvc:
+    format:
+      date: yyyy-MM-dd
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+server:
+  servlet:
+    encoding:
+      charset: utf-8
+  port: 8088
+
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml, classpath:/mybatis/mapper/extend/*.xml
+
+logging:
+  level:
+    com.example.mybatisplus.mapper: debug
+file-upload-path: ./file
+
+corses.list:
+    path-patterns:
+      - /**
+    allowed-origins:
+      - http://localhost:*
+    allowed-methods: GET,POST,HEAD,OPTIONS,PUT,DELETE,PATCH
+    allowed-headers:
+      - Authorization
+      - Content-Type
+      - X-Requested-With
+      - accept,Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+    allowed-credentials: true
+    exposed-headers: Access-Control-Allow-Origin,Access-Control-Allow-Credentials
+    max-age: 86400
+## 应用ID,您的APPID，收款账号既是您的APPID对应支付宝账号
+#appId:
+## 商户私钥，您的PKCS8格式RSA2私钥
+#returnUrl: http://localhost:8080/#/pay/success
+## 签名方式
+#signType: RSA2
+## 字符编码格式
+#charset: utf-8
+## 支付宝网关
+#gatewayUrl: https://openapi.alipaydev.com/gateway.do

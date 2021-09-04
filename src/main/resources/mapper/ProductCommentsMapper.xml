@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.ProductCommentsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.ProductComments">
+        <id column="comm_id" property="commId" />
+        <result column="product_id" property="productId" />
+        <result column="product_name" property="productName" />
+        <result column="order_item_id" property="orderItemId" />
+        <result column="user_id" property="userId" />
+        <result column="is_anonymous" property="isAnonymous" />
+        <result column="comm_level" property="commLevel" />
+        <result column="comm_content" property="commContent" />
+        <result column="comm_imgs" property="commImgs" />
+        <result column="sepc_name" property="sepcName" />
+        <result column="reply_status" property="replyStatus" />
+        <result column="reply_content" property="replyContent" />
+        <result column="reply_time" property="replyTime" />
+        <result column="is_show" property="isShow" />
+        <result column="gmt_modify" property="gmtModify" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="is_delete" property="isDelete" />
+    </resultMap>
+
+    <resultMap id="VOResultMap" type="com.example.mybatisplus.model.vo.ProductCommentsVO">
+        <association property="productComments" javaType="com.example.mybatisplus.model.domain.ProductComments">
+            <id column="comm_id" property="commId" />
+            <result column="product_id" property="productId" />
+            <result column="product_name" property="productName" />
+            <result column="order_item_id" property="orderItemId" />
+            <result column="user_id" property="userId" />
+            <result column="is_anonymous" property="isAnonymous" />
+            <result column="comm_level" property="commLevel" />
+            <result column="comm_content" property="commContent" />
+            <result column="comm_imgs" property="commImgs" />
+            <result column="sepc_name" property="sepcName" />
+            <result column="reply_status" property="replyStatus" />
+            <result column="reply_content" property="replyContent" />
+            <result column="reply_time" property="replyTime" />
+            <result column="is_show" property="isShow" />
+            <result column="gmt_modify" property="gmtModify" />
+            <result column="gmt_create" property="gmtCreate" />
+            <result column="is_delete" property="isDelete" />
+        </association>
+        <association property="users" javaType="com.example.mybatisplus.model.domain.Users">
+            <id column="user_id" property="userId" />
+            <result column="username" property="username" />
+            <result column="password" property="password" />
+            <result column="user_img" property="userImg" />
+            <result column="user_mobile" property="userMobile" />
+            <result column="user_email" property="userEmail" />
+            <result column="user_sex" property="userSex" />
+            <result column="user_birth" property="userBirth" />
+            <result column="gmt_create" property="gmtCreate" />
+            <result column="gmt_modified" property="gmtModified" />
+            <result column="is_delete" property="isDelete" />
+        </association>
+    </resultMap>
+
+    <select id="commentList" resultMap="VOResultMap">
+        select * from product_comments pc LEFT JOIN users as u ON pc.user_id = u.user_id
+        where pc.product_id = #{productId}
+    </select>
+
+    <select id="myListProdCommentsByProdId"  resultMap="BaseResultMap">
+        select * from product_comments where product_id=#{productId}
+    </select>
+</mapper>

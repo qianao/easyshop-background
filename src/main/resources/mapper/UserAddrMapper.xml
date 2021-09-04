@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.UserAddrMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.UserAddr">
+        <id column="addr_id" property="addrId" />
+        <result column="user_id" property="userId" />
+        <result column="receiver_name" property="receiverName" />
+        <result column="receiver_mobile" property="receiverMobile" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="area" property="area" />
+        <result column="addr" property="addr" />
+        <result column="post_code" property="postCode" />
+        <result column="status" property="status" />
+        <result column="common_addr" property="commonAddr" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modify" property="gmtModify" />
+    </resultMap>
+
+    <select id="selectAllByUserId" resultType="com.example.mybatisplus.model.domain.UserAddr">
+        select *
+        from user_addr
+        where user_id = #{userId}
+    </select>
+
+</mapper>

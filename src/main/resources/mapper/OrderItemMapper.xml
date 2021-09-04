@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.OrderItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.OrderItem">
+        <id column="item_id" property="itemId" />
+        <result column="order_id" property="orderId" />
+        <result column="product_id" property="productId" />
+        <result column="product_name" property="productName" />
+        <result column="product_img" property="productImg" />
+        <result column="sku_id" property="skuId" />
+        <result column="sku_name" property="skuName" />
+        <result column="product_price" property="productPrice" />
+        <result column="buy_counts" property="buyCounts" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="basket_date" property="basketDate" />
+        <result column="buy_time" property="buyTime" />
+        <result column="is_comment" property="isComment" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modify" property="gmtModify" />
+        <result column="is_delete" property="isDelete" />
+    </resultMap>
+
+    <resultMap id="VOwithCommentsResultMap" type="com.example.mybatisplus.model.vo.OrderItemCommentsVO">
+        <association property="orderItem" javaType="com.example.mybatisplus.model.domain.OrderItem">
+            <id column="item_id" property="itemId" />
+            <result column="order_id" property="orderId" />
+            <result column="product_id" property="productId" />
+            <result column="product_name" property="productName" />
+            <result column="product_img" property="productImg" />
+            <result column="sku_id" property="skuId" />
+            <result column="sku_name" property="skuName" />
+            <result column="product_price" property="productPrice" />
+            <result column="buy_counts" property="buyCounts" />
+            <result column="total_amount" property="totalAmount" />
+            <result column="basket_date" property="basketDate" />
+            <result column="buy_time" property="buyTime" />
+            <result column="is_comment" property="isComment" />
+            <result column="gmt_create" property="gmtCreate" />
+            <result column="gmt_modify" property="gmtModify" />
+            <result column="is_delete" property="isDelete" />
+        </association>
+        <association property="productComments" javaType="com.example.mybatisplus.model.domain.ProductComments">
+            <id column="comm_id" property="commId" />
+            <result column="product_id" property="productId" />
+            <result column="product_name" property="productName" />
+            <result column="order_item_id" property="orderItemId" />
+            <result column="user_id" property="userId" />
+            <result column="is_anonymous" property="isAnonymous" />
+            <result column="comm_level" property="commLevel" />
+            <result column="comm_content" property="commContent" />
+            <result column="comm_imgs" property="commImgs" />
+            <result column="sepc_name" property="sepcName" />
+            <result column="reply_status" property="replyStatus" />
+            <result column="reply_content" property="replyContent" />
+            <result column="reply_time" property="replyTime" />
+            <result column="is_show" property="isShow" />
+            <result column="gmt_modify" property="gmtModify" />
+            <result column="gmt_create" property="gmtCreate" />
+            <result column="is_delete" property="isDelete" />
+        </association>
+    </resultMap>
+
+    <select id="myListItemsByOrderId"   resultMap="BaseResultMap">
+        select * from order_item where order_id=#{orderId}
+    </select>
+
+    <select id="myListItemsAndCommentsByOrderId"   resultMap="VOwithCommentsResultMap">
+        select * from order_item o left join product_comments p
+        on o.item_id=p.order_item_id
+        where o.order_id=#{orderId}
+    </select>
+
+    <select id="myListItemsNames"   resultType="java.lang.String">
+        select DISTINCT order_item.product_name from order_item
+    </select>
+
+
+</mapper>

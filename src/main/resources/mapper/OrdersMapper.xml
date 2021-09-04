@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.OrdersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.Orders">
+        <id column="order_id" property="orderId" />
+        <result column="user_id" property="userId" />
+        <result column="address_id" property="addressId" />
+        <result column="receiver_name" property="receiverName" />
+        <result column="receiver_mobile" property="receiverMobile" />
+        <result column="receiver_address" property="receiverAddress" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="actual_amount" property="actualAmount" />
+        <result column="pay_type" property="payType" />
+        <result column="order_remark" property="orderRemark" />
+        <result column="status" property="status" />
+        <result column="delivery_type" property="deliveryType" />
+        <result column="delivery_flow_id" property="deliveryFlowId" />
+        <result column="order_freight" property="orderFreight" />
+        <result column="pay_time" property="payTime" />
+        <result column="delivery_time" property="deliveryTime" />
+        <result column="flish_time" property="flishTime" />
+        <result column="cancel_time" property="cancelTime" />
+        <result column="close_type" property="closeType" />
+        <result column="gmt_modify" property="gmtModify" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="is_delete" property="isDelete" />
+    </resultMap>
+
+    <resultMap id="orderVO" type="com.example.mybatisplus.model.vo.OrderVO">
+        <id column="order_id" property="orderId" />
+        <result column="user_id" property="userId" />
+        <result column="delivery_type" property="deliveryType" />
+        <result column="receiver_name" property="receiverName" />
+        <result column="receiver_mobile" property="receiverMobile" />
+        <result column="receiver_address" property="address" />
+        <result column="actual_amount" property="actualAmount" />
+    </resultMap>
+
+    <select id="selectPageWithStatus" resultMap="BaseResultMap">
+        select * from orders where status=#{status}
+    </select>
+
+    <select id="selectPageWithStatusById" resultMap="BaseResultMap">
+        select * from orders where status=#{status} and user_id=#{userId}
+    </select>
+
+    <select id="selectPageWithStatusAddr" resultType="com.example.mybatisplus.model.vo.OrderVO">
+        select orders.order_id,orders.user_id,user_addr.receiver_name,user_addr.receiver_mobile,
+        orders.actual_amount,delivery_type,user_addr.addr as receiver_address
+         from orders,user_addr where orders.address_id=user_addr.addr_id and orders.status=#{status}
+    </select>
+
+</mapper>
